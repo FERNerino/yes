@@ -39,6 +39,51 @@ def add_new_user():
         file.write(f"{user_id}\t{username}\t{password}\t{user_type}\n")
 
     print("New user added successfully!")
+
+def insert_item():
+    while True:
+        try:
+            code = input("Enter item code: ")
+            name = input("Enter item name: ")
+            category = input("Enter item category: ")
+            unit = input("Enter item unit: ")
+            price = int(input("Enter item price: "))
+            quantity = int(input("Enter item quantity: "))
+            threshold = int(input("Enter item threshold: "))
+
+            item = f"{code}\t{name}\t{category}\t{unit}\t{price}\t{quantity}\t{threshold}"
+
+            inventory.append(item)
+
+            print("Item added successfully.")
+
+            with open("inventory.txt", "w") as file:
+                for item in inventory:
+                    file.write(item + "\n")
+
+            break  
+
+        except ValueError:
+            print("Invalid input. Please enter the correct data type.")
+
+    inventory = []
+
+def delete_item():
+
+    code = input("Enter the item code to delete: ")
+
+    with open("inventory.txt", "r") as file:
+        inventory = file.readlines()
+
+    for item in inventory:
+        if item.startswith(code):
+            inventory.remove(item)
+            break
+
+    with open("inventory.txt", "w") as file:
+        file.writelines(inventory)
+
+    print("Item deleted successfully.")
     
 # Main program loop
 while True:
